@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound Player Gallery</title>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const App = () => {
+            const [title, setTitle] = React.useState('Sound Player');
+            const [currentSoundIndex, setCurrentSoundIndex] = React.useState(0);
+
+            // Define the sound grid data
+            const soundRows_Grids = {
+                fart: [
+                    { id: 1, text: 'Fart Sound 1' },
+                    { id: 2, text: 'Fart Sound 2' },
+                    { id: 3, text: 'Fart Sound 3' },
+                    { id: 4, text: 'Fart Sound 4' },
+                    { id: 5, text: 'Fart Sound 5' },
+                    { id: 6, text: 'Fart Sound 6' },
+                    { id: 7, text: 'Fart Sound 7' },
+                    { id: 8, text: 'Fart Sound 8' },
+                    { id: 9, text: 'Fart Sound 9' },
+                    { id: 10, text: 'Fart Sound 10' }
+                ],
+                airhorn: [
+                    { id: 1, text: 'Airhorn Sound 1' },
+                    { id: 2, text: 'Airhorn Sound 2' }
+                ],
+            };
+
+            // Possible extensions
+            const imageExtensions = ['png', 'jpeg', 'jpg'];
+
+            // Helper function to get the correct image path based on available extensions
+            const getImagePath = (soundType, soundId) => {
+                for (const ext of imageExtensions) {
+                    const path = `images/${soundType}/${soundType}${soundId}.${ext}`;
+                    const img = new Image();
+                    img.src = path;
+                    if (img.complete || img.naturalWidth > 0) {
+                        return path;
+                    }
+                }
+                // Default to png if no match is found
+                return `images/${soundType}/${soundType}${soundId}.png`;
+            };
+
+            // Get sound type and ID from URL or default to "fart" and 1
+            const params = new URLSearchParams(window.location.search);
+            const soundType = params.get('sound') || 'fart';
+            const soundId = parseInt(params.get('id'), 10) || 1;
+            const sounds = soundRows_Grids[soundType] || [];
+
+            // Set the initial sound index based on the soundId from the URL
+            const initialSoundIndex = sounds.findIndex(sound => sound.id === soundId) >= 0
+                ? sounds.findIndex(sound => sound.id === soundId)
+                : 0;
+            const [currentSound, setCurrentSound] = React.useState(sounds[initialSoundIndex]);
+
+            React.useEffect(() => {
+                if (currentSound) {
+                    setTitle(currentSound.text);
+                }
+            }, [currentSound]);
+
+            // Handle navigation for left and right
+            const handleNext = () => {
+                const nextIndex = (currentSoundIndex + 1) % sounds.length;
+                setCurrentSoundIndex(nextIndex);
+                setCurrentSound(sounds[nextIndex]);
+            };
+
+            const handlePrev = () => {
+                const prevIndex = (currentSoundIndex - 1 + sounds.length) % sounds.length;
+                setCurrentSoundIndex(prevIndex);
+                setCurrentSound(sounds[prevIndex]);
+            };
+
+            const goBack = () => {
+                window.location.href = 'index.html';
+            };
+
+            return (
+                <div className="flex flex-col items-center justify-between h-screen bg-white">
+                    <div className="w-full flex items-center justify-between bg-gray-100 p-4">
+                        <i className="fas fa-arrow-left text-xl cursor-pointer" onClick={goBack}></i>
+                        <h1 className="text-xl font-semibold">{title}</h1>
+                        <i className="fas fa-heart text-xl"></i>
+                    </div>
+                    <div className="flex-grow flex items-center justify-center relative w-full">
+                        <i className="fas fa-chevron-left text-3xl cursor-pointer absolute left-4" onClick={handlePrev}></i>
+                        <img 
+                            src={getImagePath(soundType, currentSound.id)} 
+                            alt={currentSound.text} 
+                            className="w-32 h-32"
+                        />
+                        <i className="fas fa-chevron-right text-3xl cursor-pointer absolute right-4" onClick={handleNext}></i>
+                    </div>
+                    <div className="w-full p-4 flex justify-center space-x-4 overflow-x-auto">
+                        {sounds.map((soundItem, index) => (
+                            <div 
+                                key={soundItem.id} 
+                                className={`flex flex-col items-center bg-blue-500 text-white p-4 m-2 rounded-lg min-w-[80px] cursor-pointer ${currentSoundIndex === index ? 'bg-blue-700' : ''}`}
+                                onClick={() => {
+                                    setCurrentSoundIndex(index);
+                                    setCurrentSound(soundItem);
+                                }}
+                            >
+                                <img src={getImagePath(soundType, soundItem.id)} alt={soundItem.text} className="w-12 h-12 mb-2"/>
+                                <span>{soundItem.text}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(14px);
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<html>
+<head>
+    <title>Funny Prank Sounds</title>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Fredoka One', cursive;
+        }
+    </style>
+</head>
+<body class="bg-blue-50">
+    <div id="root"></div>
+    <script type="text/babel">
+        const App = () => {
+            // Retrieve the 'sound' parameter from the URL
+            const params = new URLSearchParams(window.location.search);
+            const sound = params.get('sound');
+
+            // Define sounds with associated colors and labels
+            const sounds = {
+                airhorn: { color: 'bg-yellow-300', label: 'Airhorn Sound' },
+                fart: { color: 'bg-blue-200', label: 'Fart Sound' },
+                hairclipper: { color: 'bg-purple-300', label: 'Hair Clipper Sound' },
+                babysneeze: { color: 'bg-orange-300', label: 'Baby Sneeze Sound' },
+                breaking: { color: 'bg-pink-300', label: 'Breaking Sound' },
+                '7fozli9': { color: 'bg-teal-300', label: '7Fozli9 Sound' }
+            };
+
+            // Sound grid data (replace with dynamic data if necessary)
+            const soundGrids = {
+                fart: [
+                    { id: 1, text: 'Fart Sound 1' },
+                    { id: 2, text: 'Fart Sound 2' },
+                    { id: 3, text: 'Fart Sound 3' },
+                    { id: 4, text: 'Fart Sound 4' },
+                    { id: 5, text: 'Fart Sound 5' },
+                    { id: 6, text: 'Fart Sound 6' },
+                    { id: 7, text: 'Fart Sound 7' },
+                    { id: 8, text: 'Fart Sound 8' },
+                    { id: 9, text: 'Fart Sound 9' },
+                    { id: 10, text: 'Fart Sound 10' }
+                ],
+                airhorn: [
+                    { id: 1, text: 'Airhorn Sound 1' },
+                    { id: 2, text: 'Airhorn Sound 2' }
+                ],
+                // Add other sounds as needed
+            };
+
+            // Fetch the selected sound and associated data
+            const soundData = sounds[sound] || { color: 'bg-gray-300', label: 'Sound Not Found' };
+            const gridData = soundGrids[sound] || [];
+
+            return (
+                <div className="p-4">
+                    <div className="flex items-center mb-4">
+                        <button className="text-2xl" onClick={() => window.location.href = 'index.html'}>
+                            ←
+                        </button>
+                        <h1 className="text-4xl ml-4">{soundData.label}</h1>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                        {/* Dynamically map grid items for the selected sound */}
+                        {gridData.map(item => (
+                            <a key={item.id} href={`sound.html?sound=${sound}&id=${item.id}`} className={`p-4 rounded-lg ${soundData.color} flex flex-col items-center`}>
+                                <img src="https://placehold.co/100x100" alt={item.text} className="mb-2" />
+                                <p>{item.text}</p>
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        // Render the React component
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<head>
+    <title>Funny Prank Sounds</title>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Fredoka One', cursive;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-blue-100 to-white">
+    <div id="root"></div>
+    <script type="text/babel">
+        const App = () => {
+            return (
+                <div className="p-4">
+                    <header className="flex justify-between items-center mb-4">
+                        <h1 className="text-2xl text-center w-full font-bold text-blue-900">Funny Prank Sounds</h1>
+                        <i className="fas fa-sliders-h text-xl text-blue-900"></i>
+                    </header>
+                    <div className="grid grid-cols-2 gap-4">
+                        <a href="template.html?sound=airhorn" className="bg-yellow-300 rounded-lg p-4 flex flex-col items-center">
+                            <img src="https://placehold.co/100x100" alt="Airhorn" className="mb-2"/>
+                            <span className="text-lg font-bold text-black">Airhorn</span>
+                        </a>
+                        <a href="template.html?sound=fart" className="bg-blue-300 rounded-lg p-4 flex flex-col items-center">
+                            <img src="https://placehold.co/100x100" alt="Fart Sound" className="mb-2"/>
+                            <span className="text-lg font-bold text-black">Fart Sound</span>
+                        </a>
+                        <a href="template.html?sound=hairclipper" className="bg-purple-300 rounded-lg p-4 flex flex-col items-center">
+                            <img src="https://placehold.co/100x100" alt="Hair Clipper" className="mb-2"/>
+                            <span className="text-lg font-bold text-black">Hair Clipper</span>
+                        </a>
+                        <a href="template.html?sound=babysneeze" className="bg-orange-300 rounded-lg p-4 flex flex-col items-center">
+                            <img src="https://placehold.co/100x100" alt="Baby Sneeze" className="mb-2"/>
+                            <span className="text-lg font-bold text-black">Baby Sneeze</span>
+                        </a>
+                        <a href="template.html?sound=breaking" className="bg-pink-300 rounded-lg p-4 flex flex-col items-center">
+                            <img src="https://placehold.co/100x100" alt="Breaking" className="mb-2"/>
+                            <span className="text-lg font-bold text-black">Breaking</span>
+                        </a>
+                        <a href="template.html?sound=7fozli9" className="bg-pink-300 rounded-lg p-4 flex flex-col items-center">
+                            <img src="https://placehold.co/100x100" alt="7Fozli9" className="mb-2"/>
+                            <span className="text-lg font-bold text-black">7Fozli9</span>
+                        </a>
+                    </div>
+                    <footer className="fixed bottom-0 left-0 right-0 bg-white p-4 flex justify-around items-center border-t border-gray-300">
+                        <i className="fas fa-home text-pink-500 text-2xl"></i>
+                        <i className="fas fa-plus-square text-gray-500 text-2xl"></i>
+                        <i className="fas fa-chart-line text-gray-500 text-2xl"></i>
+                        <i className="fas fa-heart text-gray-500 text-2xl"></i>
+                    </footer>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
